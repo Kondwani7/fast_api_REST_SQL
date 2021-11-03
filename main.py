@@ -1,3 +1,5 @@
+
+
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import Optional
@@ -32,3 +34,5 @@ def update_product(product:Product, product_id: int):
         "price":product.price,
         "discount":product.discount
     }
+
+
