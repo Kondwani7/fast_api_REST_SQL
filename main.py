@@ -52,12 +52,27 @@ def create_product(product:Product):
     db.add(new_product)
     db.commit()
 #update a product
-@app.put('/product/{product_id}')
-def update_product(product_id:int):
-    pass
+@app.put('/product/{product_id}', response_model=Product, status_code=status.HTTP_200_OK)
+def update_product(product_id:int, product:Product):
+    product_to_update = db.query(models.Product).filter(models.Product.id == product.id).first()
+    product_to_update.name = product.name
+    product_to_update.description = product.description
+    product_to_update.price = product.price
+    product_to_update.discount = product.discount
+
+    db.commit()
+    return product_to_update
 #delete a product
 @app.delete('/product/{product_id}')
 def delete_product(product_id:int):
-    pass
+    product_to_delete = db.query(models.Product).filter(models.Product.id==product_id).first()
+
+    if product_to_delete is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,details="Product not found")
+
+    db.delete(product_to_delete)
+    db.commit()
+
+    return product_to_delete
 
 
