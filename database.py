@@ -9,8 +9,9 @@ user = os.getenv("DB_USER")
 db = os.getenv("DB")
 password = os.getenv("DB_PASSWORD")
 host = os.getenv("DB_HOST")
+port = os.getenv("DB_PORT")
 
-engine = create_engine(f"postgresql://{user}:{password}@{host}/{db}",
+engine = create_engine(f"postgresql://{user}:{password}@localhost:3306/{db}",
  echo=True)
 Base = declarative_base()
 
