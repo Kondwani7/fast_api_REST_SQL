@@ -25,9 +25,11 @@ def get_all_items():
     products = db.query(models.Product).all()
     return products
 #get a product by id
-@app.get('/product/{product_id}')
+@app.get('/product/{product_id}', 
+response_model=Product, status_code=status.HTTP_200_OK)
 def get_a_product(product_id:int):
-    pass
+    product = db.query(models.Product).filter(models.Product.id == product_id).first()
+    return product
 #create a new product
 @app.post('/products', response_model=Product, status_code=status.HTTP_201_CREATED)
 def create_product(product:Product):
